@@ -1,0 +1,50 @@
+{
+  "name": "orchard-data-mcp",
+  "version": "1.1.2",
+  "description": "MCP server for orchard-data: pay-per-call market data for AI agents via x402 (USDC on Base). ML regime forecasts + live-verified track record from a real trading system, catalyst radar, quotes, macro, options expected move.",
+  "mcpName": "io.github.letom1176-spec/orchard-data-mcp",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/letom1176-spec/orchard-data-mcp.git"
+  },
+  "type": "module",
+  "bin": {
+    "orchard-data-mcp": "./server.mjs"
+  },
+  "files": [
+    "server.mjs",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "modelcontextprotocol",
+    "x402",
+    "market-data",
+    "trading",
+    "usdc",
+    "base",
+    "micropayments",
+    "ai-agents",
+    "regime-forecast",
+    "stocks",
+    "crypto"
+  ],
+  "author": "orchard-data",
+  "license": "MIT",
+  "homepage": "https://orchard-data.letom1176.workers.dev",
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node test-client.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "@x402/evm": "^2.18.0",
+    "@x402/fetch": "^2.18.0",
+    "viem": "^2.55.2",
+    "zod": "^4.4.3"
+  }
+}

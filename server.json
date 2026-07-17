@@ -1,0 +1,30 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.letom1176/orchard-data-mcp",
+  "description": "Pay-per-call market data for AI agents via x402 (USDC on Base): regime, track record, catalysts.",
+  "repository": {
+    "url": "https://github.com/letom1176/orchard-data-mcp",
+    "source": "github",
+    "subfolder": "mcp"
+  },
+  "version": "1.1.1",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "orchard-data-mcp",
+      "version": "1.1.1",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "description": "Base (EVM) wallet private key used to pay per-call via x402 (USDC on Base). Use a small dedicated wallet, not your main one. Optional — without it, only the free list_products tool works.",
+          "isRequired": false,
+          "format": "string",
+          "isSecret": true,
+          "name": "EVM_PRIVATE_KEY"
+        }
+      ]
+    }
+  ]
+}
