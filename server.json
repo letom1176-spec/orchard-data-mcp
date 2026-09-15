@@ -6,18 +6,18 @@
     "url": "https://github.com/letom1176-spec/orchard-data-mcp",
     "source": "github"
   },
-  "version": "1.3.0",
+  "version": "1.3.1",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "orchard-data-mcp",
-      "version": "1.3.0",
+      "version": "1.3.1",
       "transport": {
         "type": "stdio"
       },
       "environmentVariables": [
         {
-          "description": "Base (EVM) wallet private key used to pay per-call via x402 (USDC on Base). Use a small dedicated wallet, not your main one. Optional — without it, only the free list_products tool works.",
+          "description": "Base (EVM) wallet private key used to pay per-call via x402 (USDC on Base). Use a small dedicated wallet, not your main one. Optional — without it, the three free tools (list_products, get_fear_greed, get_feed_status) still work.",
           "isRequired": false,
           "format": "string",
           "isSecret": true,

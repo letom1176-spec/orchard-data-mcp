@@ -16,7 +16,13 @@ const free = await client.callTool({ name: "list_products", arguments: {} });
 const manifest = JSON.parse(free.content[0].text);
 console.log("free tool OK: endpoints =", manifest.endpoints.length);
 
-const paid = await client.callTool({ name: "get_fear_greed", arguments: {} });
+for (const name of ["get_fear_greed", "get_feed_status"]) {
+  const r = await client.callTool({ name, arguments: {} });
+  if (r.isError) throw new Error(`${name} must work without a wallet, got: ${r.content[0].text.slice(0, 120)}`);
+  console.log(`free tool OK: ${name}`);
+}
+
+const paid = await client.callTool({ name: "get_regime_forecast", arguments: {} });
 console.log("paid tool (no key) isError:", paid.isError, "| starts:", paid.content[0].text.slice(0, 60));
 
 await client.close();

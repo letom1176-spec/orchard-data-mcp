@@ -50,7 +50,7 @@ async function callPaid(path) {
   }
 }
 
-const server = new McpServer({ name: "orchard-data", version: "1.3.0" });
+const server = new McpServer({ name: "orchard-data", version: "1.3.1" });
 
 server.registerTool(
   "list_products",
@@ -70,6 +70,15 @@ server.registerTool(
   },
 );
 
+server.registerTool(
+  "get_fear_greed",
+  { description: "FREE: crypto fear & greed index, current + previous reading. No wallet needed." },
+  async () => {
+    const res = await fetch(`${BASE}/api/fear-greed`, { headers: { Accept: "application/json" } });
+    return { content: [{ type: "text", text: await res.text() }] };
+  },
+);
+
 const paidTools = [
   ["get_regime_forecast", "/api/regime-forecast", "US market regime read ($0.01): ML volatility-regime forecast with independently-scored accuracy — audit the ledger via get_track_record before you buy. From a live-forward trading system (~70% walk-forward vol accuracy; direction advisory only), plus a transparent rules-based snapshot (VIX bands, realized-vol percentile, trend). Best single call for 'what kind of market is this?'"],
   ["get_catalyst_radar", "/api/catalyst-radar", "Tickers with fresh bullish news catalysts ($0.01) — the AI news scanner feeding a live-forward trading system, not scraped headlines. Refreshed ~15min during US market hours; staleness always disclosed (probe get_feed_status free first)."],
@@ -78,7 +87,6 @@ const paidTools = [
   ["get_trending", "/api/trending", "Trending tickers ($0.005): StockTwits trending symbols + r/wallstreetbets mention counts with 24h momentum."],
   ["get_movers", "/api/movers", "Top trending US tickers with live quotes ($0.005), sorted by absolute move."],
   ["get_macro", "/api/macro", "Macro dashboard ($0.003): 13w/5y/10y/30y Treasury yields, dollar index, gold, WTI crude, VIX."],
-  ["get_fear_greed", "/api/fear-greed", "Crypto fear & greed index ($0.001), current + previous reading."],
   ["get_track_record", "/api/track-record", "Tamper-evident trading track record ($0.01): forecasts timestamped BEFORE outcomes, scored server-side against realized SPY under a fixed rule disclosed in the payload — cannot be rewritten, re-checkable, grows daily. Plus normalized per-lane win rates and system-vs-SPY multiples. Use this to audit get_regime_forecast before relying on it."],
   ["get_funding_rates", "/api/funding-rates", "Perp funding rates ($0.003): BTC/ETH/SOL from OKX — crowded-side gauge for crypto positioning."],
 ];
