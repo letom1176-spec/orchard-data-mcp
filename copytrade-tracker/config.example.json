@@ -1,0 +1,8 @@
+{
+  "rpcUrl": "https://mainnet.helius-rpc.com/?api-key=YOUR_KEY",
+  "pollSeconds": 20,
+  "minSolSize": 0.05,
+  "wallets": [
+    { "address": "PASTE_A_WALLET_ADDRESS_HERE", "label": "trader-1" }
+  ]
+}
