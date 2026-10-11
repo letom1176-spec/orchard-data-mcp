@@ -99,3 +99,34 @@ Each paid tool call: GET → HTTP 402 with payment requirements → the client s
 a USDC transfer authorization with your key → retries with the payment header →
 JSON. Settlement is gasless for the buyer (EIP-3009 via the x402 facilitator).
 Verified end-to-end on Base mainnet.
+
+**The server can never charge more than the listed price.** Before signing, the
+client checks the payment request against the tool's listed price — the one in
+its description and in the table above, which the test suite keeps identical. It
+must be USDC on Base, at or under that amount. Anything
+else — a bad deploy, a changed price, a mistyped `ORCHARD_BASE_URL` — is refused
+with no signature produced. A tool that is listed at $0.01 cannot cost you $1.
+
+**Errors say whether you paid.** Every failure tells you whether a payment was
+signed, so you know whether a retry is safe. If a request dies *after* signing,
+the error says so and asks you to check the wallet before retrying, rather than
+inviting a retry that could pay twice.
+
+## Configuration
+
+| Variable | Default | Purpose |
+|---|---|---|
+| `EVM_PRIVATE_KEY` | unset | Burner Base wallet key. Unset = free tools only |
+| `ORCHARD_TIMEOUT_MS` | `30000` | Per-call timeout, so a stalled API cannot hang your agent |
+| `ORCHARD_BASE_URL` | production | Point at another deployment, e.g. for testing |
+
+## Development
+
+```bash
+npm test          # offline: stub API, real MCP stdio, real x402 signing with a throwaway key
+npm run test:live # smoke test against the production API
+```
+
+The offline suite covers the paid path end to end — including refusing an
+overpriced request — without touching the network or a real wallet. It also
+fails if this README's price table drifts from what the server charges.

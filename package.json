@@ -1,6 +1,6 @@
 {
   "name": "orchard-data-mcp",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "description": "MCP server for orchard-data: pay-per-call market data for AI agents via x402 (USDC on Base). ML regime forecasts + live-verified track record from a real trading system, catalyst radar, quotes, macro, options expected move.",
   "mcpName": "io.github.letom1176-spec/orchard-data-mcp",
   "repository": {
@@ -38,7 +38,8 @@
   "homepage": "https://orchard-data.letom1176.workers.dev",
   "scripts": {
     "start": "node server.mjs",
-    "test": "node test-client.mjs"
+    "test": "node test.mjs && node copytrade-tracker/test.mjs",
+    "test:live": "node test-client.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
