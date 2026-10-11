@@ -124,9 +124,15 @@ inviting a retry that could pay twice.
 
 ```bash
 npm test          # offline: stub API, real MCP stdio, real x402 signing with a throwaway key
-npm run test:live # smoke test against the production API
+npm run test:live # check against the production API — free, needs no funds
 ```
 
 The offline suite covers the paid path end to end — including refusing an
 overpriced request — without touching the network or a real wallet. It also
 fails if this README's price table drifts from what the server charges.
+
+`test:live` costs nothing. It checks the paid path with a freshly generated
+**empty** wallet: signing a payment authorization spends nothing, so production
+must reject it, and that rejection proves production's payment request passes
+the price cap. It ignores any `EVM_PRIVATE_KEY` in your environment, so it can
+never touch a real wallet.
