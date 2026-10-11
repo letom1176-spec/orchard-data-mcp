@@ -1,0 +1,2 @@
+{"ts":"2026-01-01T00:00:00Z","slot":1,"wallet":"Wa11etAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","label":"t1","signature":"a","side":"buy","mint":"M1ntAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","tokenAmount":1000,"solAmount":1,"priceSol":0.001}
+{"ts":"2026-01-01T01:00:00Z","slot":2,"wallet":"Wa11etAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","label":"t1","signature":"b","side":"sell","mint":"M1ntAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","tokenAmount":1000,"solAmount":1.05,"priceSol":0.00105}

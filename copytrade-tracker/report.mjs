@@ -1,7 +1,13 @@
 // Scores what copying these wallets WOULD have returned. No trading happens here.
 import { readFileSync, existsSync } from "node:fs";
 
-const TRADES = "./trades.jsonl";
+import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
+
+// Anchor data files to this directory so the tool works from any CWD.
+const HERE = dirname(fileURLToPath(import.meta.url));
+
+const TRADES = join(HERE, "trades.jsonl");
 // You never get the leader's fill. You see their trade, then buy after them, into
 // the price their own buy just moved. SLIPPAGE_PCT is your assumed penalty on
 // every entry and exit; FEE_SOL is priority fee + DEX fee per leg.

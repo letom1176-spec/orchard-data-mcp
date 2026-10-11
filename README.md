@@ -4,15 +4,44 @@ MCP server for [orchard-data](https://orchard-data.letom1176.workers.dev) — pa
 market data for AI agents over [x402](https://x402.org) (USDC micro-payments on Base).
 No account, no API key, no subscription.
 
-**Try it before you spend anything.** Three tools cost nothing and need no wallet:
-`list_products`, `get_fear_greed`, and `get_feed_status`.
+## Try it in 10 seconds — no wallet, no signup
 
-**The flagship tools are data you cannot get elsewhere**: an ML market-regime
-forecast, a news catalyst radar, and a **track record you can audit** — predictions
-are recorded *before* the outcome and scored server-side against what actually
-happened, with the scoring rule shipped inside the payload. Produced by a real
-algorithmic trading system, refreshed ~15 min during US market hours, staleness
-always reported and never hidden.
+```bash
+npx -y orchard-data-mcp
+```
+
+Add it to any MCP client with no credentials at all:
+
+```json
+{ "mcpServers": { "orchard-data": { "command": "npx", "args": ["-y", "orchard-data-mcp"] } } }
+```
+
+Three tools work immediately with no wallet configured:
+
+| Free tool | What you get |
+|---|---|
+| `list_products` | Every endpoint with its live price |
+| `get_fear_greed` | Crypto fear & greed, current + previous |
+| `get_feed_status` | Age of each data feed — verify freshness *before* paying |
+
+Ask your agent for `get_feed_status` first. If the feeds are stale, you have
+learned that for free; nothing here hides staleness to sell you a call.
+
+Paid tools cost $0.001–$0.10 and need a burner Base wallet with a few dollars of
+USDC — [setup below](#paying-for-the-paid-tools). Without a key they explain what
+they would cost instead of failing silently.
+
+## What makes it worth paying for
+
+**A track record you can audit.** Forecasts are timestamped *before* the outcome
+and scored server-side against what actually happened, under a fixed rule shipped
+inside the payload. Call `get_track_record` for $0.01 and check our accuracy
+before you trust anything else we sell. Almost nothing in this category lets you
+do that, because almost nothing in this category would survive it.
+
+Plus an ML market-regime forecast and a news catalyst radar, produced by a real
+algorithmic trading system — refreshed ~15 min during US market hours, staleness
+always reported.
 
 ## Tools
 
@@ -44,7 +73,7 @@ slices like `/api/quote`, `/api/yields`, `/api/vix`, `/api/commodities`,
 See the [manifest](https://orchard-data.letom1176.workers.dev/) or
 [openapi.json](https://orchard-data.letom1176.workers.dev/openapi.json).
 
-## Setup
+## Paying for the paid tools
 
 Paid tools need a small dedicated Base wallet holding USDC (a few dollars goes a
 very long way at these prices). **Use a burner wallet, never your main one.**

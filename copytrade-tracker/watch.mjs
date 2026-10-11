@@ -3,9 +3,15 @@
 import { readFileSync, appendFileSync, existsSync, writeFileSync } from "node:fs";
 import { rpc, extractSwap } from "./lib.mjs";
 
-const CONFIG = process.env.CONFIG ?? "./config.json";
-const TRADES = "./trades.jsonl";
-const CURSORS = "./cursors.json";
+import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
+
+// Anchor data files to this directory so the tool works from any CWD.
+const HERE = dirname(fileURLToPath(import.meta.url));
+
+const CONFIG = process.env.CONFIG ?? join(HERE, "config.json");
+const TRADES = join(HERE, "trades.jsonl");
+const CURSORS = join(HERE, "cursors.json");
 
 if (!existsSync(CONFIG)) {
   console.error(`No ${CONFIG}. Copy config.example.json to config.json and fill in your RPC URL and wallets.`);

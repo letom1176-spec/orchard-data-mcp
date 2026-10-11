@@ -2,6 +2,11 @@
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import { writeFileSync, rmSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
+
+// Resolve from this file, so the suite passes from any working directory.
+const HERE = dirname(fileURLToPath(import.meta.url));
 import { extractSwap, WSOL } from "./lib.mjs";
 
 const W = "Wa11etAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
@@ -57,11 +62,11 @@ const rows = [
   { ts: "2026-01-01T00:00:00Z", slot: 1, wallet: W, label: "t1", signature: "a", side: "buy", mint: MINT, tokenAmount: 1000, solAmount: 1, priceSol: 0.001 },
   { ts: "2026-01-01T01:00:00Z", slot: 2, wallet: W, label: "t1", signature: "b", side: "sell", mint: MINT, tokenAmount: 1000, solAmount: 1.05, priceSol: 0.00105 },
 ];
-writeFileSync("./trades.jsonl", rows.map((r) => JSON.stringify(r)).join("\n") + "\n");
-const out = execFileSync(process.execPath, ["report.mjs"], { encoding: "utf8", env: { ...process.env, SLIPPAGE_PCT: "3", FEE_SOL: "0.0006" } });
+writeFileSync(join(HERE, "trades.jsonl"), rows.map((r) => JSON.stringify(r)).join("\n") + "\n");
+const out = execFileSync(process.execPath, [join(HERE, "report.mjs")], { cwd: HERE, encoding: "utf8", env: { ...process.env, SLIPPAGE_PCT: "3", FEE_SOL: "0.0006" } });
 assert.match(out, /1 round trips/);
 assert.match(out, /-0\.0/, `a +5% leader trade must show negative after costs:\n${out}`);
-rmSync("./trades.jsonl");
+rmSync(join(HERE, "trades.jsonl"));
 
 console.log("all tests passed");
 console.log(out.trim().split("\n").slice(-4).join("\n"));

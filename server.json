@@ -1,7 +1,7 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.letom1176-spec/orchard-data-mcp",
-  "description": "Pay-per-call market data for AI agents via x402 (USDC on Base): regime, track record, catalysts.",
+  "description": "Pay-per-call market data for AI agents via x402 on Base. 3 free tools, no wallet. Audit our record.",
   "repository": {
     "url": "https://github.com/letom1176-spec/orchard-data-mcp",
     "source": "github"
