@@ -42,7 +42,7 @@
     "test:live": "node test-client.mjs"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.29.0",
+    "@modelcontextprotocol/sdk": "^1.32.1",
     "@x402/evm": "^2.18.0",
     "@x402/fetch": "^2.18.0",
     "viem": "^2.55.2",
