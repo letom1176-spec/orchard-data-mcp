@@ -5,11 +5,11 @@
   "mcpName": "io.github.letom1176-spec/orchard-data-mcp",
   "repository": {
     "type": "git",
-    "url": "https://github.com/letom1176-spec/orchard-data-mcp.git"
+    "url": "git+https://github.com/letom1176-spec/orchard-data-mcp.git"
   },
   "type": "module",
   "bin": {
-    "orchard-data-mcp": "./server.mjs"
+    "orchard-data-mcp": "server.mjs"
   },
   "files": [
     "server.mjs",
