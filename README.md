@@ -4,22 +4,49 @@ MCP server for [orchard-data](https://orchard-data.letom1176.workers.dev) — pa
 market data for AI agents over [x402](https://x402.org) (USDC micro-payments on Base).
 No account, no API key, no subscription.
 
-**Try it before you spend anything.** Three tools cost nothing and need no wallet:
-`list_products`, `get_fear_greed`, and `get_feed_status`.
+## Try it in 10 seconds — no wallet, no signup
 
-**The flagship tools are data you cannot get elsewhere**: an ML market-regime
-forecast, a news catalyst radar, and a **track record you can audit** — predictions
-are recorded *before* the outcome and scored server-side against what actually
-happened, with the scoring rule shipped inside the payload. Produced by a real
-algorithmic trading system, refreshed ~15 min during US market hours, staleness
-always reported and never hidden.
+```bash
+npx -y orchard-data-mcp
+```
+
+Add it to any MCP client with no credentials at all:
+
+```json
+{ "mcpServers": { "orchard-data": { "command": "npx", "args": ["-y", "orchard-data-mcp"] } } }
+```
+
+Two tools work immediately with no wallet configured:
+
+| Free tool | What you get |
+|---|---|
+| `list_products` | Every endpoint with its live price |
+| `get_feed_status` | Age of each data feed — verify freshness *before* paying |
+
+Ask your agent for `get_feed_status` first. If the feeds are stale, you have
+learned that for free; nothing here hides staleness to sell you a call.
+
+Paid tools cost $0.001–$0.10 and need a burner Base wallet with a few dollars of
+USDC — [setup below](#paying-for-the-paid-tools). Without a key they explain what
+they would cost instead of failing silently.
+
+## What makes it worth paying for
+
+**A track record you can audit.** Forecasts are timestamped *before* the outcome
+and scored server-side against what actually happened, under a fixed rule shipped
+inside the payload. Call `get_track_record` for $0.01 and check our accuracy
+before you trust anything else we sell. Almost nothing in this category lets you
+do that, because almost nothing in this category would survive it.
+
+Plus an ML market-regime forecast and a news catalyst radar, produced by a real
+algorithmic trading system — refreshed ~15 min during US market hours, staleness
+always reported.
 
 ## Tools
 
 | Tool | Price/call | What |
 |---|---|---|
 | `list_products` | **free** | Product manifest with live prices |
-| `get_fear_greed` | **free** | Crypto fear & greed index, current + previous reading |
 | `get_feed_status` | **free** | Freshness probe — check the rig-fed products are current *before* paying |
 | `run_backtest` ⭐ | $0.10 | Backtest your own entry rule on up to 10y of real daily bars: next-open fills (no look-ahead), slippage charged, train/test halves scored apart, buy&hold + SPY baselines always printed, disagreeing halves reported as noise |
 | `get_symbol_dossier` | $0.02 | One ticker, one call: quote + 1y technicals + expected move + regime + news catalysts. Replaces ~6 calls, priced below their sum |
@@ -33,6 +60,7 @@ always reported and never hidden.
 | `get_expected_move` | $0.005 | Options-implied expected move (ATM straddle to nearest expiry), any symbol |
 | `get_macro` | $0.003 | Treasury yields (13w/5y/10y/30y), dollar index, gold, WTI crude, VIX |
 | `get_funding_rates` | $0.003 | BTC/ETH/SOL perp funding (8h + annualized), next funding time, mark price |
+| `get_fear_greed` | $0.001 | Crypto fear & greed index, current + previous reading |
 | `get_ohlcv` | $0.002 | Daily OHLCV candles, any US symbol, 5d–1y |
 
 ⭐ = unique to us, not repackaged vendor data.
@@ -44,7 +72,7 @@ slices like `/api/quote`, `/api/yields`, `/api/vix`, `/api/commodities`,
 See the [manifest](https://orchard-data.letom1176.workers.dev/) or
 [openapi.json](https://orchard-data.letom1176.workers.dev/openapi.json).
 
-## Setup
+## Paying for the paid tools
 
 Paid tools need a small dedicated Base wallet holding USDC (a few dollars goes a
 very long way at these prices). **Use a burner wallet, never your main one.**
@@ -61,7 +89,7 @@ very long way at these prices). **Use a burner wallet, never your main one.**
 }
 ```
 
-Without `EVM_PRIVATE_KEY` the three free tools still work, and the paid tools
+Without `EVM_PRIVATE_KEY` the two free tools still work, and the paid tools
 explain what they would cost rather than failing silently.
 
 ## How payment works
@@ -70,3 +98,40 @@ Each paid tool call: GET → HTTP 402 with payment requirements → the client s
 a USDC transfer authorization with your key → retries with the payment header →
 JSON. Settlement is gasless for the buyer (EIP-3009 via the x402 facilitator).
 Verified end-to-end on Base mainnet.
+
+**The server can never charge more than the listed price.** Before signing, the
+client checks the payment request against the tool's listed price — the one in
+its description and in the table above, which the test suite keeps identical. It
+must be USDC on Base, at or under that amount. Anything
+else — a bad deploy, a changed price, a mistyped `ORCHARD_BASE_URL` — is refused
+with no signature produced. A tool that is listed at $0.01 cannot cost you $1.
+
+**Errors say whether you paid.** Every failure tells you whether a payment was
+signed, so you know whether a retry is safe. If a request dies *after* signing,
+the error says so and asks you to check the wallet before retrying, rather than
+inviting a retry that could pay twice.
+
+## Configuration
+
+| Variable | Default | Purpose |
+|---|---|---|
+| `EVM_PRIVATE_KEY` | unset | Burner Base wallet key. Unset = free tools only |
+| `ORCHARD_TIMEOUT_MS` | `30000` | Per-call timeout, so a stalled API cannot hang your agent |
+| `ORCHARD_BASE_URL` | production | Point at another deployment, e.g. for testing |
+
+## Development
+
+```bash
+npm test          # offline: stub API, real MCP stdio, real x402 signing with a throwaway key
+npm run test:live # check against the production API — free, needs no funds
+```
+
+The offline suite covers the paid path end to end — including refusing an
+overpriced request — without touching the network or a real wallet. It also
+fails if this README's price table drifts from what the server charges.
+
+`test:live` costs nothing. It checks the paid path with a freshly generated
+**empty** wallet: signing a payment authorization spends nothing, so production
+must reject it, and that rejection proves production's payment request passes
+the price cap. It ignores any `EVM_PRIVATE_KEY` in your environment, so it can
+never touch a real wallet.
