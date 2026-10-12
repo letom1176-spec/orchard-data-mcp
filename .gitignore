@@ -1,3 +1,6 @@
+node_modules/
+*.tgz
 copytrade-tracker/config.json
 copytrade-tracker/trades.jsonl
 copytrade-tracker/cursors.json
+/trades.jsonl
