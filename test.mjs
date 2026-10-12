@@ -5,12 +5,15 @@
 import assert from "node:assert/strict";
 import http from "node:http";
 import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
 
 const USDC = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913";
-const SERVER = new URL("./server.mjs", import.meta.url).pathname;
+// fileURLToPath, not .pathname: on Windows .pathname is "/C:/..." and keeps
+// %20 for spaces, so node would look for C:\C:\... and fail.
+const SERVER = fileURLToPath(new URL("./server.mjs", import.meta.url));
 
 // ---- stub API -------------------------------------------------------------
 // Per-test behavior lives in `stub`; reset before each case.

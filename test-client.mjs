@@ -6,11 +6,14 @@
 // reject it. That rejection proves production's payment request passes this
 // client's price cap. Any EVM_PRIVATE_KEY in your environment is ignored, so
 // this can never touch a real wallet.
+import { fileURLToPath } from "node:url";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 import { generatePrivateKey } from "viem/accounts";
 
-const SERVER = new URL("./server.mjs", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
+// fileURLToPath, not .pathname: on Windows .pathname is "/C:/..." and keeps
+// %20 for spaces, so node would look for C:\C:\... and fail.
+const SERVER = fileURLToPath(new URL("./server.mjs", import.meta.url));
 let failed = false;
 const check = (good, msg) => { console.log(`${good ? "ok  " : "FAIL"} ${msg}`); if (!good) failed = true; };
 
