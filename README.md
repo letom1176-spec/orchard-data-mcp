@@ -16,12 +16,11 @@ Add it to any MCP client with no credentials at all:
 { "mcpServers": { "orchard-data": { "command": "npx", "args": ["-y", "orchard-data-mcp"] } } }
 ```
 
-Three tools work immediately with no wallet configured:
+Two tools work immediately with no wallet configured:
 
 | Free tool | What you get |
 |---|---|
 | `list_products` | Every endpoint with its live price |
-| `get_fear_greed` | Crypto fear & greed, current + previous |
 | `get_feed_status` | Age of each data feed — verify freshness *before* paying |
 
 Ask your agent for `get_feed_status` first. If the feeds are stale, you have
@@ -48,7 +47,6 @@ always reported.
 | Tool | Price/call | What |
 |---|---|---|
 | `list_products` | **free** | Product manifest with live prices |
-| `get_fear_greed` | **free** | Crypto fear & greed index, current + previous reading |
 | `get_feed_status` | **free** | Freshness probe — check the rig-fed products are current *before* paying |
 | `run_backtest` ⭐ | $0.10 | Backtest your own entry rule on up to 10y of real daily bars: next-open fills (no look-ahead), slippage charged, train/test halves scored apart, buy&hold + SPY baselines always printed, disagreeing halves reported as noise |
 | `get_symbol_dossier` | $0.02 | One ticker, one call: quote + 1y technicals + expected move + regime + news catalysts. Replaces ~6 calls, priced below their sum |
@@ -62,6 +60,7 @@ always reported.
 | `get_expected_move` | $0.005 | Options-implied expected move (ATM straddle to nearest expiry), any symbol |
 | `get_macro` | $0.003 | Treasury yields (13w/5y/10y/30y), dollar index, gold, WTI crude, VIX |
 | `get_funding_rates` | $0.003 | BTC/ETH/SOL perp funding (8h + annualized), next funding time, mark price |
+| `get_fear_greed` | $0.001 | Crypto fear & greed index, current + previous reading |
 | `get_ohlcv` | $0.002 | Daily OHLCV candles, any US symbol, 5d–1y |
 
 ⭐ = unique to us, not repackaged vendor data.
@@ -90,7 +89,7 @@ very long way at these prices). **Use a burner wallet, never your main one.**
 }
 ```
 
-Without `EVM_PRIVATE_KEY` the three free tools still work, and the paid tools
+Without `EVM_PRIVATE_KEY` the two free tools still work, and the paid tools
 explain what they would cost rather than failing silently.
 
 ## How payment works

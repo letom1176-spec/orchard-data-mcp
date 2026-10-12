@@ -29,7 +29,7 @@ const api = http.createServer((req, res) => {
   const url = new URL(req.url, "http://stub");
   stub.requests.push(url.pathname + url.search);
 
-  const freeBodies = { "/": { endpoints: [{ path: "/api/x" }] }, "/api/feed-status": { feeds: { regime: 60 } }, "/api/fear-greed": { value: 42 } };
+  const freeBodies = { "/": { endpoints: [{ path: "/api/x" }] }, "/api/feed-status": { feeds: { regime: 60 } } };
   if (url.pathname in freeBodies) {
     const mode = stub.free[url.pathname];
     if (mode === "hang") return;
@@ -74,7 +74,7 @@ async function test(name, fn) {
 
 const KEY = generatePrivateKey();
 const ADDR = privateKeyToAccount(KEY).address;
-const FREE = ["list_products", "get_feed_status", "get_fear_greed"];
+const FREE = ["list_products", "get_feed_status"];
 
 // ---- metadata -------------------------------------------------------------
 let tools;
@@ -112,6 +112,19 @@ await test("README price table matches what the server charges, tool for tool", 
   assert.equal(listed.size, tools.length, "README lists a tool the server does not have");
 });
 
+await test("server.json description fits the registry's 100-character limit", () => {
+  const { description } = JSON.parse(readFileSync(new URL("./server.json", import.meta.url)));
+  assert.ok(description.length <= 100, `${description.length} chars: ${description}`);
+});
+
+await test("every local module the server imports ships in the npm package", () => {
+  const { files } = JSON.parse(readFileSync(new URL("./package.json", import.meta.url)));
+  const src = readFileSync(new URL("./server.mjs", import.meta.url), "utf8");
+  for (const [, mod] of src.matchAll(/from "\.\/([^"]+)"/g)) {
+    assert.ok(files.includes(mod), `server.mjs imports ./${mod}, but package.json "files" omits it, so the published package would crash`);
+  }
+});
+
 // ---- free path ------------------------------------------------------------
 await test("every free tool works with no wallet configured", () => withServer({}, async (c) => {
   for (const name of FREE) {
@@ -122,8 +135,8 @@ await test("every free tool works with no wallet configured", () => withServer({
 }));
 
 await test("an API error on a free tool is reported as an error, not as data", () => withServer({}, async (c) => {
-  stub.free["/api/fear-greed"] = 503;
-  const r = await call(c, "get_fear_greed");
+  stub.free["/api/feed-status"] = 503;
+  const r = await call(c, "get_feed_status");
   assert.equal(r.isError, true);
   assert.match(text(r), /HTTP 503/);
   assert.match(text(r), /nothing was charged/);
@@ -156,7 +169,7 @@ await test("a paid tool with no wallet states its own price and makes no request
   const r = await call(c, "run_backtest", { symbol: "SPY", entry: "rsi2_below", threshold: 10 });
   assert.equal(r.isError, true);
   assert.match(text(r), /run_backtest costs \$0\.10 per call/);
-  assert.match(text(r), /\$0\.002–\$0\.10/);
+  assert.match(text(r), /\$0\.001–\$0\.10/);
   for (const name of FREE) assert.ok(text(r).includes(name), `no-wallet message omits free tool ${name}`);
   assert.deepEqual(stub.requests, []);
 }));
