@@ -22,6 +22,10 @@ import { FREE_TOOLS, PAID_TOOLS } from "./tools.mjs";
 const SERVER = fileURLToPath(new URL("./server.mjs", import.meta.url));
 let failed = false;
 const check = (good, msg) => { console.log(`${good ? "ok  " : "FAIL"} ${msg}`); if (!good) failed = true; };
+// A product production is deliberately withholding is a data problem, not a
+// defect in this package, so it is reported loudly but does not fail the run.
+const offline = [];
+const warn = (msg) => { console.log(`WARN ${msg}`); offline.push(msg); };
 
 async function session(env, fn) {
   const { EVM_PRIVATE_KEY: _ignored, ...rest } = process.env;
@@ -39,7 +43,14 @@ const usd = (n) => `$${n >= 0.01 ? n.toFixed(2) : String(n)}`;
 async function askedPrice(path) {
   const res = await fetch(`${BASE}${path}`, { headers: { Accept: "application/json" }, signal: AbortSignal.timeout(30_000) });
   const body = await res.text();
-  if (res.status !== 402) return { error: `HTTP ${res.status} instead of 402: ${body.slice(0, 120)}` };
+  if (res.status !== 402) {
+    // The API answers {"for_sale": false, "reason": ...} rather than sell stale data.
+    try {
+      const j = JSON.parse(body);
+      if (j.for_sale === false) return { offline: j.reason ?? "no reason given" };
+    } catch {}
+    return { error: `HTTP ${res.status} instead of 402: ${body.slice(0, 120)}` };
+  }
   const header = res.headers.get("payment-required");
   const req = header ? JSON.parse(Buffer.from(header, "base64").toString()) : JSON.parse(body);
   const usdc = (req.accepts ?? []).find((a) => String(a.asset).toLowerCase() === USDC_BASE && ["eip155:8453", "base"].includes(a.network));
@@ -51,7 +62,8 @@ for (const { name, price, path, sample } of PAID_TOOLS) {
   const listed = Math.round(price * 1e6);
   try {
     const got = await askedPrice(typeof path === "function" ? path(sample) : path);
-    if (got.error) check(false, `${name}: ${got.error}`);
+    if (got.offline) warn(`${name} is not for sale right now, so its price could not be checked. Production says: ${got.offline}`);
+    else if (got.error) check(false, `${name}: ${got.error}`);
     else if (got.units === listed) check(true, `${name} costs ${usd(price)}, as listed (x402 v${got.version})`);
     else check(false, `${name} is listed at ${usd(price)} but production charges ${usd(got.units / 1e6)}. Fix the price in tools.mjs.`);
   } catch (e) {
@@ -62,6 +74,7 @@ for (const { name, price, path, sample } of PAID_TOOLS) {
 await session({}, async (c) => {
   for (const [name] of FREE_TOOLS) {
     const r = await c.callTool({ name, arguments: {} });
+    if (name === "get_feed_status" && !r.isError) console.log(`     feed ages: ${r.content[0].text.slice(0, 400)}`);
     check(!r.isError, `${name} works with no wallet${r.isError ? `: ${r.content[0].text.slice(0, 200)}` : ""}`);
   }
 });
@@ -81,4 +94,5 @@ await session({ EVM_PRIVATE_KEY: generatePrivateKey() }, async (c) => {
 });
 
 console.log(failed ? "\nSome checks FAILED." : "\nAll live checks passed. Nothing was charged.");
+if (offline.length) console.log(`${offline.length} product(s) offline in production; users are told why and are not charged. Fix the data feed, not this package.`);
 process.exitCode = failed ? 1 : 0;

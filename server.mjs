@@ -86,6 +86,15 @@ function describeAsk(req) {
     : `${units} units of ${req.asset} on ${req.network}`;
 }
 
+function forSaleReason(body) {
+  try {
+    const j = JSON.parse(body);
+    return j.for_sale === false ? String(j.reason ?? "the data is stale.") : null;
+  } catch {
+    return null;
+  }
+}
+
 const noWallet = (name, price) => `${name} costs ${usd(price)} per call, paid in USDC on Base via x402. No wallet is configured, so no request was made and nothing was charged.
 
 To enable paid tools:
@@ -117,6 +126,9 @@ async function callPaid(name, price, path) {
       return fail(`Payment for ${name} (${usd(price)}) was not accepted, so nothing was charged. Wallet ${from} most likely holds too little USDC on Base. Server said: ${body.slice(0, 300)}`);
     }
     if (!res.ok) {
+      // Rather than sell stale data, the API answers {"for_sale": false, "reason"}.
+      const withheld = !signed && forSaleReason(body);
+      if (withheld) return fail(`${name} is temporarily not for sale: ${withheld} No payment was signed and nothing was charged. Call get_feed_status (free) to see when feeds were last updated.`);
       const charged = signed ? `A ${usd(price)} payment was signed for this request; check wallet ${from} before retrying.` : "No payment was signed.";
       return fail(`orchard-data API returned HTTP ${res.status} for ${name}: ${body.slice(0, 300)}\n${charged}`);
     }

@@ -39,6 +39,7 @@ const api = http.createServer((req, res) => {
 
   // Paid route: x402 v2. Ask for `stub.ask` (or the price implied by the
   // route), then accept any signature and record what was signed.
+  if (stub.beforePay === "withheld") return json(res, 503, { product: "catalyst-radar", for_sale: false, reason: "Upstream news feed is 114341 minutes old (sale threshold 1440m)." });
   if (stub.beforePay) return json(res, stub.beforePay, { error: "boom" });
   const sig = req.headers["payment-signature"];
   if (!sig) {
@@ -230,6 +231,15 @@ await test("a server error before payment says no payment was signed", () => wit
   assert.equal(r.isError, true);
   assert.match(text(r), /HTTP 500/);
   assert.match(text(r), /No payment was signed/);
+  assert.equal(stub.signatures.length, 0);
+}));
+
+await test("a product withheld for stale data says so plainly and charges nothing", () => withServer({ EVM_PRIVATE_KEY: KEY }, async (c) => {
+  stub.beforePay = "withheld";
+  const r = await call(c, "get_catalyst_radar");
+  assert.equal(r.isError, true);
+  assert.match(text(r), /get_catalyst_radar is temporarily not for sale: Upstream news feed is 114341 minutes old/);
+  assert.match(text(r), /nothing was charged/);
   assert.equal(stub.signatures.length, 0);
 }));
 
