@@ -92,6 +92,31 @@ export const PAID_TOOLS = [
     inputSchema: { symbol, range: z.enum(["5d", "1mo", "3mo", "6mo", "1y"]).optional() },
     path: ({ symbol, range }) => `/api/ohlcv?symbol=${encodeURIComponent(symbol)}&range=${range || "1mo"}`,
   },
+  // ---- agent utilities ----
+  {
+    name: "read_web_page", title: "Read a web page", price: 0.001,
+    sample: { url: "https://example.com" },
+    description: "Read any web page as clean markdown: title, description, publish date, main text with links, word count. Static HTML (no JavaScript rendering). A page that cannot be fetched is not charged.",
+    inputSchema: { url: z.string().describe("Full http(s) URL") },
+    path: ({ url }) => `/api/web-read?url=${encodeURIComponent(url)}`,
+  },
+  {
+    name: "verify_email", title: "Verify an email address", price: 0.001,
+    sample: { email: "someone@example.com" },
+    description: "Check an email address before sending: syntax, domain exists, live MX, null MX, disposable domain, role account, free provider, SPF and DMARC. Verdict, 0-100 score and reasons. Does not probe the mailbox itself.",
+    inputSchema: { email: z.string().describe("Address to check") },
+    path: ({ email }) => `/api/email-verify?email=${encodeURIComponent(email)}`,
+  },
+  {
+    name: "check_token", title: "Token safety check", price: 0.005,
+    sample: { address: "0x532f27101965dd16442E59d40670FaF5eBB142E4", chain: "base" },
+    description: "EVM token safety check before buying: honeypot, buy/sell tax, owner powers, verified source, holder sell simulation, plus live DEX liquidity, volume and pool age. Verdict, score, red flags. Chains: base (default), ethereum, bsc, arbitrum, polygon, optimism.",
+    inputSchema: {
+      address: z.string().describe("Token contract address, 0x..."),
+      chain: z.enum(["base", "ethereum", "bsc", "arbitrum", "polygon", "optimism"]).optional(),
+    },
+    path: ({ address, chain }) => `/api/token-check?address=${encodeURIComponent(address)}&chain=${chain || "base"}`,
+  },
   // ---- crowd mood (the shelf that sells) ----
   {
     name: "get_sentiment_brief", title: "Sentiment brief", price: 0.005, path: "/api/sentiment-brief",

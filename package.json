@@ -1,7 +1,7 @@
 {
   "name": "orchard-data-mcp",
   "version": "1.5.0",
-  "description": "MCP server for orchard-data: pay-per-call market data for AI agents via x402 (USDC on Base). ML regime forecasts + live-verified track record from a real trading system, catalyst radar, quotes, macro, options expected move.",
+  "description": "MCP server: pay-per-call market data + agent tools via x402 (USDC on Base). Web page reader, email verification, token safety, sentiment, prediction markets, regime forecasts, quotes, macro.",
   "mcpName": "io.github.letom1176-spec/orchard-data-mcp",
   "repository": {
     "type": "git",
@@ -32,7 +32,17 @@
     "ai-agents",
     "regime-forecast",
     "stocks",
-    "crypto"
+    "crypto",
+    "web-scraping",
+    "url-to-markdown",
+    "web-reader",
+    "email-verification",
+    "email-validation",
+    "token-safety",
+    "honeypot",
+    "rug-check",
+    "polymarket",
+    "fear-greed"
   ],
   "author": "orchard-data",
   "license": "MIT",

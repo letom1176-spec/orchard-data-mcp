@@ -62,6 +62,9 @@ always reported.
 | `get_funding_rates` | $0.003 | BTC/ETH/SOL perp funding (8h + annualized), next funding time, mark price |
 | `get_fear_greed` | $0.001 | Crypto fear & greed index, current + previous reading |
 | `get_ohlcv` | $0.002 | Daily OHLCV candles, any US symbol, 5d–1y |
+| `read_web_page` | $0.001 | Any web page as clean markdown (title, date, text with links). Failed fetches are not charged |
+| `verify_email` | $0.001 | Email check: syntax, MX, disposable, role account, SPF/DMARC, with verdict and score |
+| `check_token` | $0.005 | EVM token safety: honeypot, taxes, owner powers, holder sell simulation, DEX liquidity, verdict |
 | `get_sentiment_brief` | $0.005 | Crowd mood in one call: crypto fear & greed + StockTwits trending + WSB mentions + CoinGecko trending coins |
 | `get_fear_greed_history` | $0.002 | Crypto fear & greed, last 30 days, with 7d/30d averages, trend and extreme-day counts |
 | `get_stocktwits_trending` | $0.003 | StockTwits trending symbols with watchlist counts |
