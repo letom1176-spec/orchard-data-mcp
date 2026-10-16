@@ -52,7 +52,7 @@ always reported.
 | `get_symbol_dossier` | $0.02 | One ticker, one call: quote + 1y technicals + expected move + regime + news catalysts. Replaces ~6 calls, priced below their sum |
 | `get_regime_forecast` ⭐ | $0.01 | ML volatility-regime forecast + a transparent rules-based read (VIX bands, realized-vol percentile, trend) |
 | `get_track_record` ⭐ | $0.01 | Normalized per-lane win rates + the server-side scored forecast ledger. Audit us before buying anything else |
-| `get_catalyst_radar` ⭐ | $0.01 | Tickers with a fresh bullish news catalyst and why it matters — not scraped headlines |
+| `get_catalyst_radar` ⭐ | $0.01 | Tickers with a fresh news catalyst (bullish + bearish) and the headline behind it: the trading system's AI scanner, or a disclosed 12h headline scan when it is idle |
 | `get_dip_radar` ⭐ | $0.01 | Live dip scan over the exact 55-name book the trading system runs: RSI(2), distance from the 20-day high, tiered dip flags under disclosed thresholds |
 | `get_market_brief` | $0.005 | BTC/ETH/SOL + SPY/QQQ/DIA/IWM + crypto fear & greed, one call |
 | `get_trending` | $0.005 | StockTwits trending + r/wallstreetbets mention counts |

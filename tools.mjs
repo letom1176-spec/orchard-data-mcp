@@ -48,7 +48,7 @@ export const PAID_TOOLS = [
   },
   {
     name: "get_catalyst_radar", title: "Catalyst radar", price: 0.01, path: "/api/catalyst-radar",
-    description: "Tickers with fresh bullish news catalysts — the AI news scanner feeding a live-forward trading system, not scraped headlines. Refreshed ~15min during US market hours; staleness always disclosed (probe get_feed_status free first).",
+    description: "Tickers with a fresh news catalyst, bullish and bearish, with the headline behind each. Source is a live trading system's AI news scanner when it is fresh, otherwise a live scan of the last 12h of headlines across 36 high-attention US names under a disclosed keyword rule; the `source` field says which.",
   },
   {
     name: "get_dip_radar", title: "Dip radar", price: 0.01, path: "/api/dip-radar",
