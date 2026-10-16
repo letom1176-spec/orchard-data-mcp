@@ -92,4 +92,82 @@ export const PAID_TOOLS = [
     inputSchema: { symbol, range: z.enum(["5d", "1mo", "3mo", "6mo", "1y"]).optional() },
     path: ({ symbol, range }) => `/api/ohlcv?symbol=${encodeURIComponent(symbol)}&range=${range || "1mo"}`,
   },
+  // ---- crowd mood (the shelf that sells) ----
+  {
+    name: "get_sentiment_brief", title: "Sentiment brief", price: 0.005, path: "/api/sentiment-brief",
+    description: "Crowd mood in one call: crypto fear & greed, StockTwits trending, r/wallstreetbets mention counts and CoinGecko's most-searched coins. Cheaper than the four slices separately.",
+  },
+  {
+    name: "get_fear_greed_history", title: "Fear & greed, 30 days", price: 0.002, path: "/api/fear-greed-history",
+    description: "Crypto fear & greed for the last 30 days: daily readings, 7d/30d averages, min/max, 7-day trend and the count of extreme-fear and extreme-greed days.",
+  },
+  {
+    name: "get_stocktwits_trending", title: "StockTwits trending", price: 0.003, path: "/api/stocktwits-trending",
+    description: "StockTwits trending symbols right now, with watchlist counts.",
+  },
+  {
+    name: "get_wsb_mentions", title: "WallStreetBets mentions", price: 0.003, path: "/api/wsb-mentions",
+    description: "r/wallstreetbets ticker mention counts, ranked, with upvotes and the change versus 24h ago.",
+  },
+  {
+    name: "get_crypto_trending", title: "Trending coins", price: 0.002, path: "/api/crypto-trending",
+    description: "CoinGecko's most-searched coins in the last 24h, ranked, with price, 24h change, market cap and volume, plus the trending sectors.",
+  },
+  {
+    name: "get_prediction_markets", title: "Prediction markets", price: 0.003,
+    sample: { q: "bitcoin" },
+    description: "Live Polymarket odds: the most-traded open markets by 24h volume, each outcome's price as a probability, with volume, liquidity and end date. Optional keyword filter.",
+    inputSchema: { q: z.string().optional().describe("Keyword filter, e.g. fed, bitcoin, election") },
+    path: ({ q }) => (q ? `/api/prediction-markets?q=${encodeURIComponent(q)}` : "/api/prediction-markets"),
+  },
+  // ---- one-call snapshots ----
+  {
+    name: "get_quote", title: "Stock quote", price: 0.002,
+    sample: { symbol: "NVDA" },
+    description: "Live quote for any US symbol: last, previous close, % change, day high/low, volume, exchange timestamp.",
+    inputSchema: { symbol },
+    path: ({ symbol }) => `/api/quote?symbol=${encodeURIComponent(symbol)}`,
+  },
+  {
+    name: "get_dip_check", title: "Dip check", price: 0.003,
+    sample: { symbol: "NVDA" },
+    description: "Is this symbol dipping? RSI(2), RSI(14), distance from the 20-day high and a disclosed-threshold verdict, for any US ticker.",
+    inputSchema: { symbol },
+    path: ({ symbol }) => `/api/dip-check?symbol=${encodeURIComponent(symbol)}`,
+  },
+  {
+    name: "get_etf_quotes", title: "Index ETF quotes", price: 0.003, path: "/api/etf-quotes",
+    description: "SPY, QQQ, DIA and IWM live quotes in one call.",
+  },
+  {
+    name: "get_crypto_spot", title: "Crypto spot", price: 0.003, path: "/api/crypto-spot",
+    description: "BTC, ETH and SOL spot prices with 24h change.",
+  },
+  {
+    name: "get_crypto_global", title: "Crypto market totals", price: 0.001, path: "/api/crypto-global",
+    description: "Whole crypto market: total market cap, 24h volume, 24h market-cap change, BTC and ETH dominance.",
+  },
+  {
+    name: "get_yields", title: "Treasury yields", price: 0.002, path: "/api/yields",
+    description: "US Treasury curve: 13-week, 5-year, 10-year and 30-year yields.",
+  },
+  {
+    name: "get_vix", title: "VIX", price: 0.001, path: "/api/vix",
+    description: "The VIX now: last, previous close, % change, day range.",
+  },
+  {
+    name: "get_commodities", title: "Gold, oil, dollar", price: 0.002, path: "/api/commodities",
+    description: "Gold futures, WTI crude futures and the dollar index in one call.",
+  },
+  {
+    name: "get_fx_rates", title: "FX rates", price: 0.001,
+    sample: { base: "USD" },
+    description: "Currency exchange rates (ECB reference, ~30 currencies) against any base, with the majors pulled out.",
+    inputSchema: { base: z.string().optional().describe("3-letter base currency, default USD") },
+    path: ({ base }) => `/api/fx-rates?base=${encodeURIComponent(base || "USD")}`,
+  },
+  {
+    name: "get_gas", title: "Gas fees", price: 0.001, path: "/api/gas",
+    description: "Gas right now on Base and Ethereum: base fee, priority-fee percentiles, suggested max fee, and the USD cost of a transfer, an ERC-20 transfer and a DEX swap.",
+  },
 ];

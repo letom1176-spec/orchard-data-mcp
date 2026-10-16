@@ -8,6 +8,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
+import { FREE_TOOLS, PAID_TOOLS } from "./tools.mjs";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
 
 const USDC = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913";
@@ -81,7 +82,7 @@ const FREE = ["list_products", "get_feed_status"];
 let tools;
 await test("lists all tools with price-tagged descriptions and honest annotations", () => withServer({}, async (c) => {
   ({ tools } = await c.listTools());
-  assert.equal(tools.length, 16);
+  assert.equal(tools.length, FREE_TOOLS.length + PAID_TOOLS.length);
   for (const t of tools) {
     if (FREE.includes(t.name)) {
       assert.match(t.description, /^FREE, no wallet needed\./, t.name);

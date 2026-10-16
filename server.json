@@ -6,12 +6,12 @@
     "url": "https://github.com/letom1176-spec/orchard-data-mcp",
     "source": "github"
   },
-  "version": "1.4.0",
+  "version": "1.5.0",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "orchard-data-mcp",
-      "version": "1.4.0",
+      "version": "1.5.0",
       "transport": {
         "type": "stdio"
       },

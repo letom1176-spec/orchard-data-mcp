@@ -62,6 +62,22 @@ always reported.
 | `get_funding_rates` | $0.003 | BTC/ETH/SOL perp funding (8h + annualized), next funding time, mark price |
 | `get_fear_greed` | $0.001 | Crypto fear & greed index, current + previous reading |
 | `get_ohlcv` | $0.002 | Daily OHLCV candles, any US symbol, 5d–1y |
+| `get_sentiment_brief` | $0.005 | Crowd mood in one call: crypto fear & greed + StockTwits trending + WSB mentions + CoinGecko trending coins |
+| `get_fear_greed_history` | $0.002 | Crypto fear & greed, last 30 days, with 7d/30d averages, trend and extreme-day counts |
+| `get_stocktwits_trending` | $0.003 | StockTwits trending symbols with watchlist counts |
+| `get_wsb_mentions` | $0.003 | r/wallstreetbets ticker mentions, ranked, vs 24h ago |
+| `get_crypto_trending` | $0.002 | CoinGecko's most-searched coins (24h) with price and 24h change |
+| `get_prediction_markets` | $0.003 | Live Polymarket odds for the most-traded open markets, optional keyword filter |
+| `get_quote` | $0.002 | Live quote, any US symbol |
+| `get_dip_check` | $0.003 | Is this symbol dipping? RSI(2)/RSI(14)/distance from 20-day high + verdict |
+| `get_etf_quotes` | $0.003 | SPY/QQQ/DIA/IWM quotes in one call |
+| `get_crypto_spot` | $0.003 | BTC/ETH/SOL spot + 24h change |
+| `get_crypto_global` | $0.001 | Total crypto market cap, volume, BTC/ETH dominance |
+| `get_yields` | $0.002 | Treasury yields: 13w/5y/10y/30y |
+| `get_vix` | $0.001 | VIX now |
+| `get_commodities` | $0.002 | Gold, WTI crude, dollar index |
+| `get_fx_rates` | $0.001 | FX rates, ~30 currencies, any base |
+| `get_gas` | $0.001 | Base + Ethereum gas now, with USD cost of a transfer and a swap |
 
 ⭐ = unique to us, not repackaged vendor data.
 
