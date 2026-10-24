@@ -94,6 +94,23 @@ slices like `/api/quote`, `/api/yields`, `/api/vix`, `/api/commodities`,
 See the [manifest](https://orchard-data.letom1176.workers.dev/) or
 [openapi.json](https://orchard-data.letom1176.workers.dev/openapi.json).
 
+## Agent skills (no install of this package needed)
+
+Two skills in [`skills/`](skills/) teach any agent with an x402 wallet (for example the x402scan / AgentCash MCP) to call these endpoints directly by URL:
+
+| Skill | Covers |
+|---|---|
+| [`agent-tools`](skills/agent-tools/SKILL.md) | read a web page, verify an email, domain lookup, prompt-injection screen, cheap LLM calls, token safety |
+| [`market-data`](skills/market-data/SKILL.md) | crypto fear & greed, perp funding for any market, gas, trending coins, Polymarket odds, quotes, VIX, yields, FX |
+
+```bash
+# Claude Code: give the agent an x402 wallet, then add the skills
+npx @x402scan/mcp install --client claude-code -y
+git clone https://github.com/letom1176-spec/orchard-data-mcp && cp -r orchard-data-mcp/skills/* ~/.claude/skills/
+```
+
+`npm run test:live` checks every URL and price in the skills against production.
+
 ## Paying for the paid tools
 
 Paid tools need a small dedicated Base wallet holding USDC (a few dollars goes a

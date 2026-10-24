@@ -14,7 +14,8 @@
   "files": [
     "server.mjs",
     "tools.mjs",
-    "README.md"
+    "README.md",
+    "skills"
   ],
   "engines": {
     "node": ">=18"
@@ -49,7 +50,10 @@
     "dns",
     "whois",
     "funding-rate",
-    "hyperliquid"
+    "hyperliquid",
+    "agent-skills",
+    "claude-skills",
+    "skill"
   ],
   "author": "orchard-data",
   "license": "MIT",

@@ -93,6 +93,26 @@ await session({ EVM_PRIVATE_KEY: generatePrivateKey() }, async (c) => {
   }
 });
 
+// Skills (skills/*/SKILL.md) quote URLs and prices to agents directly, outside
+// this package's tool table. Every row is asked, unpaid, what it costs.
+{
+  const { readdirSync, readFileSync } = await import("node:fs");
+  const skillsDir = new URL("./skills/", import.meta.url);
+  for (const name of readdirSync(skillsDir)) {
+    let md;
+    try { md = readFileSync(new URL(`${name}/SKILL.md`, skillsDir), "utf8"); } catch { continue; }
+    for (const [, url, price] of md.matchAll(/^\|[^|]+\| `(https:\/\/[^`]+)` \| \$([\d.]+) \|/gm)) {
+      const isPost = /\/chat\/completions$/.test(url);
+      const res = await fetch(url, isPost
+        ? { method: "POST", headers: { "content-type": "application/json", Accept: "application/json" }, body: JSON.stringify({ messages: [{ role: "user", content: "hi" }] }), signal: AbortSignal.timeout(30_000) }
+        : { headers: { Accept: "application/json" }, signal: AbortSignal.timeout(30_000) });
+      const pr = res.headers.get("payment-required");
+      const amount = pr ? Number(JSON.parse(Buffer.from(pr, "base64").toString()).accepts[0].amount) / 1e6 : null;
+      check(res.status === 402 && amount === Number(price), `skill ${name}: ${url.replace(/^https:\/\/[^/]+/, "")} costs $${price}, as the skill says${amount !== Number(price) ? ` (production: ${res.status} ${amount ?? "-"})` : ""}`);
+    }
+  }
+}
+
 console.log(failed ? "\nSome checks FAILED." : "\nAll live checks passed. Nothing was charged.");
 if (offline.length) console.log(`${offline.length} product(s) offline in production; users are told why and are not charged. Fix the data feed, not this package.`);
 process.exitCode = failed ? 1 : 0;
