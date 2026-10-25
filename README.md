@@ -107,10 +107,13 @@ Three skills in [`skills/`](skills/) teach any agent with an x402 wallet (for ex
 | [`package-security`](skills/package-security/SKILL.md) | known vulnerabilities for any package version, lockfile and requirements.txt scans, hallucinated/typosquatted package names, npm package health (served by the sister store [pkgpulse](https://pkgpulse.letom1176.workers.dev)) |
 
 ```bash
-# Claude Code: give the agent an x402 wallet, then add the skills
+# 1. Give the agent an x402 wallet (Claude Code shown; see x402scan.com for other clients)
 npx @x402scan/mcp install --client claude-code -y
-git clone https://github.com/letom1176-spec/orchard-data-mcp && cp -r orchard-data-mcp/skills/* ~/.claude/skills/
+# 2. Add the skills (all three, or pick one with --skill package-security)
+npx skills add letom1176-spec/orchard-data-mcp
 ```
+
+Works with any agent the [`skills`](https://github.com/vercel-labs/skills) CLI supports (Claude Code, Cursor, Codex and more).
 
 `npm run test:live` checks every URL and price in the skills against production.
 
