@@ -98,12 +98,13 @@ See the [manifest](https://orchard-data.letom1176.workers.dev/) or
 
 ## Agent skills (no install of this package needed)
 
-Two skills in [`skills/`](skills/) teach any agent with an x402 wallet (for example the x402scan / AgentCash MCP) to call these endpoints directly by URL:
+Three skills in [`skills/`](skills/) teach any agent with an x402 wallet (for example the x402scan / AgentCash MCP) to call these endpoints directly by URL:
 
 | Skill | Covers |
 |---|---|
 | [`agent-tools`](skills/agent-tools/SKILL.md) | read a web page, verify an email, domain lookup, prompt-injection screen, cheap LLM calls, token safety |
 | [`market-data`](skills/market-data/SKILL.md) | crypto fear & greed, perp funding for any market, gas, trending coins, Polymarket odds, quotes, VIX, yields, FX |
+| [`package-security`](skills/package-security/SKILL.md) | known vulnerabilities for any package version, lockfile and requirements.txt scans, hallucinated/typosquatted package names, npm package health (served by the sister store [pkgpulse](https://pkgpulse.letom1176.workers.dev)) |
 
 ```bash
 # Claude Code: give the agent an x402 wallet, then add the skills
