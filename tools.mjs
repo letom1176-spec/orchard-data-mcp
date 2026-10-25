@@ -55,11 +55,11 @@ export const PAID_TOOLS = [
     description: "Dip radar over the exact ~55-name universe a live-forward trading system trades: RSI(2), distance from 20-day high, 1d/5d returns for every name, each flagged deep_dip/dip/near_dip/none under fully disclosed thresholds. Computed fresh from real daily bars, refreshed <=15 min, works 24/7.",
   },
   {
-    name: "get_market_brief", title: "Market brief", price: 0.005, path: "/api/market-brief",
+    name: "get_market_brief", title: "Market brief", price: 0.01, path: "/api/market-brief",
     description: "One-call market snapshot: BTC/ETH/SOL spot + 24h change, crypto fear & greed, SPY/QQQ/IWM/VIX quotes.",
   },
   {
-    name: "get_trending", title: "Trending tickers", price: 0.005, path: "/api/trending",
+    name: "get_trending", title: "Trending tickers", price: 0.01, path: "/api/trending",
     description: "Trending tickers: StockTwits trending symbols + r/wallstreetbets mention counts with 24h momentum.",
   },
   {
@@ -74,7 +74,7 @@ export const PAID_TOOLS = [
     path: ({ symbol }) => `/api/expected-move?symbol=${encodeURIComponent(symbol)}`,
   },
   {
-    name: "get_macro", title: "Macro dashboard", price: 0.003, path: "/api/macro",
+    name: "get_macro", title: "Macro dashboard", price: 0.01, path: "/api/macro",
     description: "Macro dashboard: 13w/5y/10y/30y Treasury yields, dollar index, gold, WTI crude, VIX.",
   },
   {
@@ -172,7 +172,7 @@ export const PAID_TOOLS = [
     description: "Crypto fear & greed for the last 30 days: daily readings, 7d/30d averages, min/max, 7-day trend and the count of extreme-fear and extreme-greed days.",
   },
   {
-    name: "get_stocktwits_trending", title: "StockTwits trending", price: 0.003, path: "/api/stocktwits-trending",
+    name: "get_stocktwits_trending", title: "StockTwits trending", price: 0.01, path: "/api/stocktwits-trending",
     description: "StockTwits trending symbols right now, with watchlist counts.",
   },
   {
@@ -192,7 +192,7 @@ export const PAID_TOOLS = [
   },
   // ---- one-call snapshots ----
   {
-    name: "get_quote", title: "Stock quote", price: 0.002,
+    name: "get_quote", title: "Stock quote", price: 0.01,
     sample: { symbol: "NVDA" },
     description: "Live quote for any US symbol: last, previous close, % change, day high/low, volume, exchange timestamp.",
     inputSchema: { symbol },
@@ -206,7 +206,7 @@ export const PAID_TOOLS = [
     path: ({ symbol }) => `/api/dip-check?symbol=${encodeURIComponent(symbol)}`,
   },
   {
-    name: "get_etf_quotes", title: "Index ETF quotes", price: 0.003, path: "/api/etf-quotes",
+    name: "get_etf_quotes", title: "Index ETF quotes", price: 0.01, path: "/api/etf-quotes",
     description: "SPY, QQQ, DIA and IWM live quotes in one call.",
   },
   {

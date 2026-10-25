@@ -54,11 +54,11 @@ always reported.
 | `get_track_record` ⭐ | $0.01 | Normalized per-lane win rates + the server-side scored forecast ledger. Audit us before buying anything else |
 | `get_catalyst_radar` ⭐ | $0.01 | Tickers with a fresh news catalyst (bullish + bearish) and the headline behind it: the trading system's AI scanner, or a disclosed 12h headline scan when it is idle |
 | `get_dip_radar` ⭐ | $0.01 | Live dip scan over the exact 55-name book the trading system runs: RSI(2), distance from the 20-day high, tiered dip flags under disclosed thresholds |
-| `get_market_brief` | $0.005 | BTC/ETH/SOL + SPY/QQQ/DIA/IWM + crypto fear & greed, one call |
-| `get_trending` | $0.005 | StockTwits trending + r/wallstreetbets mention counts |
+| `get_market_brief` | $0.01 | BTC/ETH/SOL + SPY/QQQ/DIA/IWM + crypto fear & greed, one call |
+| `get_trending` | $0.01 | StockTwits trending + r/wallstreetbets mention counts |
 | `get_movers` | $0.005 | Biggest US movers with live quotes, sorted by absolute move |
 | `get_expected_move` | $0.005 | Options-implied expected move (ATM straddle to nearest expiry), any symbol |
-| `get_macro` | $0.003 | Treasury yields (13w/5y/10y/30y), dollar index, gold, WTI crude, VIX |
+| `get_macro` | $0.01 | Treasury yields (13w/5y/10y/30y), dollar index, gold, WTI crude, VIX |
 | `get_funding_rates` | $0.003 | BTC/ETH/SOL perp funding (8h + annualized), next funding time, mark price |
 | `get_fear_greed` | $0.001 | Crypto fear & greed index, current + previous reading |
 | `get_ohlcv` | $0.002 | Daily OHLCV candles, any US symbol, 5d–1y |
@@ -72,13 +72,13 @@ always reported.
 | `get_funding_history` | $0.002 | Funding for any Hyperliquid perp: current rate plus up to 7 days of hourly history |
 | `get_sentiment_brief` | $0.005 | Crowd mood in one call: crypto fear & greed + StockTwits trending + WSB mentions + CoinGecko trending coins |
 | `get_fear_greed_history` | $0.002 | Crypto fear & greed, last 30 days, with 7d/30d averages, trend and extreme-day counts |
-| `get_stocktwits_trending` | $0.003 | StockTwits trending symbols with watchlist counts |
+| `get_stocktwits_trending` | $0.01 | StockTwits trending symbols with watchlist counts |
 | `get_wsb_mentions` | $0.003 | r/wallstreetbets ticker mentions, ranked, vs 24h ago |
 | `get_crypto_trending` | $0.002 | CoinGecko's most-searched coins (24h) with price and 24h change |
 | `get_prediction_markets` | $0.003 | Live Polymarket odds for the most-traded open markets, optional keyword filter |
-| `get_quote` | $0.002 | Live quote, any US symbol |
+| `get_quote` | $0.01 | Live quote, any US symbol |
 | `get_dip_check` | $0.003 | Is this symbol dipping? RSI(2)/RSI(14)/distance from 20-day high + verdict |
-| `get_etf_quotes` | $0.003 | SPY/QQQ/DIA/IWM quotes in one call |
+| `get_etf_quotes` | $0.01 | SPY/QQQ/DIA/IWM quotes in one call |
 | `get_crypto_spot` | $0.003 | BTC/ETH/SOL spot + 24h change |
 | `get_crypto_global` | $0.001 | Total crypto market cap, volume, BTC/ETH dominance |
 | `get_yields` | $0.002 | Treasury yields: 13w/5y/10y/30y |

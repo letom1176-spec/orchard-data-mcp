@@ -47,12 +47,12 @@ See [rules/getting-started.md](rules/getting-started.md).
 | Trending coins (CoinGecko searches) | `https://orchard-data.letom1176.workers.dev/api/crypto-trending` | $0.002 | none |
 | Total crypto market cap, BTC dominance | `https://orchard-data.letom1176.workers.dev/api/crypto-global` | $0.001 | none |
 | Polymarket odds | `https://orchard-data.letom1176.workers.dev/api/prediction-markets` | $0.003 | `?q=keyword` (optional) |
-| Stock or ETF quote | `https://orchard-data.letom1176.workers.dev/api/quote` | $0.002 | `?symbol=NVDA` |
-| SPY / QQQ / DIA / IWM | `https://orchard-data.letom1176.workers.dev/api/etf-quotes` | $0.003 | none |
+| Stock or ETF quote | `https://orchard-data.letom1176.workers.dev/api/quote` | $0.01 | `?symbol=NVDA` |
+| SPY / QQQ / DIA / IWM | `https://orchard-data.letom1176.workers.dev/api/etf-quotes` | $0.01 | none |
 | VIX | `https://orchard-data.letom1176.workers.dev/api/vix` | $0.001 | none |
 | Treasury yields | `https://orchard-data.letom1176.workers.dev/api/yields` | $0.002 | none |
 | FX rates | `https://orchard-data.letom1176.workers.dev/api/fx-rates` | $0.001 | `?base=USD` |
-| Market brief (crypto + ETFs + F&G) | `https://orchard-data.letom1176.workers.dev/api/market-brief` | $0.005 | none |
+| Market brief (crypto + ETFs + F&G) | `https://orchard-data.letom1176.workers.dev/api/market-brief` | $0.01 | none |
 | News catalysts (bullish + bearish) | `https://orchard-data.letom1176.workers.dev/api/catalyst-radar` | $0.01 | none |
 | SEC filings, 8-K events decoded | `https://orchard-data.letom1176.workers.dev/api/sec-filings` | $0.003 | `?symbol=NVDA&form=8-K` |
 | Insider trades (SEC Form 4) | `https://orchard-data.letom1176.workers.dev/api/insider-trades` | $0.005 | `?symbol=NVDA` |
