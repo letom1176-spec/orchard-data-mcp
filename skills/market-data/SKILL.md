@@ -18,6 +18,8 @@ description: |
   - "price of", "quote", "how is SPY doing", "VIX", "yields", "gold", "oil", "exchange rate"
   - "polymarket", "odds", "chance that", "prediction market"
   - "gas fees", "what's trending in crypto", "market brief"
+  - "SEC filings", "8-K", "what did the company disclose", "earnings release filed"
+  - "insider buying", "insider selling", "Form 4", "did executives sell"
 
   IMPORTANT: Use the exact URLs in the Quick Reference table. Never guess paths. To list everything: x402.discover_api_endpoints(url="https://orchard-data.letom1176.workers.dev")
 mcp:
@@ -52,6 +54,8 @@ See [rules/getting-started.md](rules/getting-started.md).
 | FX rates | `https://orchard-data.letom1176.workers.dev/api/fx-rates` | $0.001 | `?base=USD` |
 | Market brief (crypto + ETFs + F&G) | `https://orchard-data.letom1176.workers.dev/api/market-brief` | $0.005 | none |
 | News catalysts (bullish + bearish) | `https://orchard-data.letom1176.workers.dev/api/catalyst-radar` | $0.01 | none |
+| SEC filings, 8-K events decoded | `https://orchard-data.letom1176.workers.dev/api/sec-filings` | $0.003 | `?symbol=NVDA&form=8-K` |
+| Insider trades (SEC Form 4) | `https://orchard-data.letom1176.workers.dev/api/insider-trades` | $0.005 | `?symbol=NVDA` |
 
 ## Examples
 

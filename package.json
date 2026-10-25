@@ -1,6 +1,6 @@
 {
   "name": "orchard-data-mcp",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "MCP server: pay-per-call market data + agent tools via x402 (USDC on Base). Web page reader, email verification, token safety, sentiment, prediction markets, regime forecasts, quotes, macro.",
   "mcpName": "io.github.letom1176-spec/orchard-data-mcp",
   "repository": {
