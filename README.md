@@ -60,7 +60,7 @@ always reported.
 | `get_expected_move` | $0.005 | Options-implied expected move (ATM straddle to nearest expiry), any symbol |
 | `get_macro` | $0.01 | Treasury yields (13w/5y/10y/30y), dollar index, gold, WTI crude, VIX |
 | `get_funding_rates` | $0.003 | BTC/ETH/SOL perp funding (8h + annualized), next funding time, mark price |
-| `get_fear_greed` | $0.001 | Crypto fear & greed index, current + previous reading |
+| `get_fear_greed` | $0.002 | Crypto fear & greed index, current + previous reading |
 | `get_ohlcv` | $0.002 | Daily OHLCV candles, any US symbol, 5d–1y |
 | `read_web_page` | $0.001 | Any web page as clean markdown (title, date, text with links). Failed fetches are not charged |
 | `verify_email` | $0.001 | Email check: syntax, MX, disposable, role account, SPF/DMARC, with verdict and score |

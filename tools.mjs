@@ -82,7 +82,7 @@ export const PAID_TOOLS = [
     description: "Perp funding rates: BTC/ETH/SOL from OKX — crowded-side gauge for crypto positioning.",
   },
   {
-    name: "get_fear_greed", title: "Crypto fear & greed", price: 0.001, path: "/api/fear-greed",
+    name: "get_fear_greed", title: "Crypto fear & greed", price: 0.002, path: "/api/fear-greed",
     description: "Crypto fear & greed index, current + previous reading.",
   },
   {

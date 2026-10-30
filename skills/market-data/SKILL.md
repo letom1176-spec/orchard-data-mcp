@@ -38,7 +38,7 @@ See [rules/getting-started.md](rules/getting-started.md).
 
 | Task | Endpoint | Price | Input |
 |------|----------|-------|-------|
-| Crypto fear & greed (now + previous) | `https://orchard-data.letom1176.workers.dev/api/fear-greed` | $0.001 | none |
+| Crypto fear & greed (now + previous) | `https://orchard-data.letom1176.workers.dev/api/fear-greed` | $0.002 | none |
 | Fear & greed, last 30 days + trend | `https://orchard-data.letom1176.workers.dev/api/fear-greed-history` | $0.002 | none |
 | Crowd-mood bundle (F&G + StockTwits + WSB + trending coins) | `https://orchard-data.letom1176.workers.dev/api/sentiment-brief` | $0.005 | none |
 | Perp funding, any Hyperliquid market | `https://orchard-data.letom1176.workers.dev/api/funding-history` | $0.002 | `?symbol=BTC&hours=24` |
